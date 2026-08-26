@@ -1,0 +1,60 @@
+export type TaskStatus = "todo" | "in-progress" | "done";
+export type Priority = "low" | "medium" | "high" | "critical";
+
+export interface UserRow {
+  id: string;
+  email: string;
+  display_name: string;
+  password_hash: string;
+  created_at: string;
+}
+
+export interface TaskRow {
+  id: string;
+  user_id: string;
+  title: string;
+  description: string;
+  status: TaskStatus;
+  priority: Priority;
+  tags: string; // JSON-encoded string[]
+  assignee: string;
+  position: number;
+  created_at: string;
+  updated_at: string;
+}
+
+/** Public shape returned by the API (tags decoded, no user_id leak). */
+export interface TaskDTO {
+  id: string;
+  title: string;
+  description: string;
+  status: TaskStatus;
+  priority: Priority;
+  tags: string[];
+  assignee: string;
+  position: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export function toTaskDTO(row: TaskRow): TaskDTO {
+  let tags: string[] = [];
+  try {
+    const parsed = JSON.parse(row.tags);
+    if (Array.isArray(parsed)) tags = parsed.map(String);
+  } catch {
+    tags = [];
+  }
+  return {
+    id: row.id,
+    title: row.title,
+    description: row.description,
+    status: row.status,
+    priority: row.priority,
+    tags,
+    assignee: row.assignee,
+    position: row.position,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
