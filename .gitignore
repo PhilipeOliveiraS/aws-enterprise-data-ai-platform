@@ -1,0 +1,26 @@
+# Security & Credentials
+.env
+*.pem
+*.key
+.aws/
+credentials
+KIRO_API_KEY
+*secret*
+
+# Infrastructure as Code (Terraform)
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.tfstate.lock.info
+
+# Data Engineering & Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.parquet
+*.csv
+*.db
+
+# Kiro specific
+.kiro/logs/
