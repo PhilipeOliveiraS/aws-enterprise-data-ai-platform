@@ -1,0 +1,7 @@
+{
+  "name": "enterprise-auto-format",
+  "description": "Automatically formats Python and Terraform code after agent generation to maintain enterprise code quality without consuming AI credits.",
+  "event": "agentStop",
+  "action": "runCommand",
+  "command": "terraform fmt -recursive infra/ && black src/ || echo 'Formatters not installed locally, skipping...'"
+}
