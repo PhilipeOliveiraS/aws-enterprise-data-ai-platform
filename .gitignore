@@ -7,20 +7,19 @@ credentials
 KIRO_API_KEY
 *secret*
 
+# Dependencies
+node_modules/
+bun.lockb
+
 # Infrastructure as Code (Terraform)
 .terraform/
 *.tfstate
 *.tfstate.backup
 .terraform.tfstate.lock.info
 
-# Data Engineering & Python
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-*.parquet
-*.csv
+# SQLite Database
 *.db
+*.sqlite
 
 # Kiro specific
 .kiro/logs/

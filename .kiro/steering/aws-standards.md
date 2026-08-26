@@ -1,21 +1,24 @@
-# AWS Enterprise Architecture & FinOps Standards
+# Enterprise Architecture & Coding Standards
 
-## 1. Architectural Patterns (Serverless-First)
-- **Always** favor Serverless architectures (AWS Lambda, Amazon API Gateway, Amazon DynamoDB, Amazon EventBridge, Amazon S3, Amazon Athena) to minimize idle compute costs.
-- Do **not** provision Amazon EC2 instances, RDS clusters, or NAT Gateways unless explicitly requested. 
-- Data processing workloads must output analytical data in **Parquet** format and store it in Amazon S3.
+## 1. Technology Stack
+- **Frontend:** React 19, Tailwind CSS v4, shadcn/ui.
+- **Backend:** ElysiaJS (REST API) running on Bun.
+- **Database:** `bun:sqlite` (Native Bun SQLite).
+- **Authentication:** JWT with hashed passwords (`Bun.password`).
 
-## 2. Security & DevSecOps (Least Privilege)
-- **Never** use wildcard (`"*"`) permissions in IAM Policies or S3 Bucket Policies.
-- **Always** enable AWS KMS encryption (SSE-KMS) for data at rest (S3, DynamoDB, SQS).
-- Do not expose credentials, API Keys, or secrets in code. Use AWS Secrets Manager or AWS Systems Manager Parameter Store.
+## 2. AWS Infrastructure Guidelines
+- **Architecture Pattern:** The application must be deployed using Amazon CloudFront -> Application Load Balancer (ALB) -> EC2 Instances in Private Subnets.
+- **Egress:** Use a NAT Gateway for outbound traffic from the private EC2 instances.
+- **Storage:** The SQLite database must reside on an attached EBS volume.
+- **Security:** EC2 instances must NEVER have public IP addresses. Security Groups must strictly limit traffic (e.g., ALB only communicates with EC2 on specific ports).
 
 ## 3. FinOps & Cost Allocation
-- Every AWS resource capable of being tagged **must** include the following mandatory tags via Terraform `default_tags`:
-  - `Environment` (e.g., dev, staging, prod)
-  - `CostCenter` (e.g., DATA-AI-PLATFORM)
-  - `ManagedBy` (e.g., Kiro-Agent)
+- Every generated AWS resource (e.g., EC2, VPC, ALB) must include the following mandatory tags:
+  - `Environment: Production`
+  - `CostCenter: TASKIRO-AI-LAB`
+  - `ManagedBy: Kiro-Agent`
 
 ## 4. Coding Standards
-- **Terraform:** Use modular structures. Always declare variables with type constraints.
-- **Python (Data Pipelines):** Use Type Hints. Include Docstrings for all functions. Rely on `boto3` for AWS integrations.
+- Implement clean, modular components.
+- Ensure all API endpoints handle errors gracefully and return appropriate HTTP status codes.
+- Do not hardcode secrets or AWS credentials.

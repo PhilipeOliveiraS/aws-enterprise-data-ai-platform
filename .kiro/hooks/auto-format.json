@@ -1,7 +1,7 @@
 {
   "name": "enterprise-auto-format",
-  "description": "Automatically formats Python and Terraform code after agent generation to maintain enterprise code quality without consuming AI credits.",
+  "description": "Automatically formats TS/JS/React code after agent generation.",
   "event": "agentStop",
   "action": "runCommand",
-  "command": "terraform fmt -recursive infra/ && black src/ || echo 'Formatters not installed locally, skipping...'"
+  "command": "bunx prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\" || echo 'Prettier not available, skipping...'"
 }
