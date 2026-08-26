@@ -1,0 +1,35 @@
+name: Kiro AI Enterprise Code Review
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  ai-code-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node & Bun (Environment for TasKiro)
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install Kiro CLI (Headless Mode Setup)
+        run: |
+          curl -fsSL https://kiro.dev/install | bash
+          echo "$HOME/.bun/bin" >> $GITHUB_PATH
+
+      - name: Run Kiro AI Automated Code Review & Security Audit
+        env:
+          KIRO_API_KEY: ${{ secrets.KIRO_API_KEY }}
+        run: |
+          # Executa o Kiro CLI em modo non-interactive usando o agente de DevSecOps que criamos
+          kiro-cli chat --agent devsecops-reviewer --no-interactive --prompt "Review the changes in this repository for security vulnerabilities, IAM misconfigurations, and FinOps compliance, and output a structured report."
