@@ -151,6 +151,20 @@ resource "aws_lb_listener" "http" {
   }
 }
 
+# ─── CloudFront Managed Policies (AWS-managed; data sources only, no tags) ───
+
+data "aws_cloudfront_cache_policy" "caching_disabled" {
+  name = "Managed-CachingDisabled"
+}
+
+data "aws_cloudfront_cache_policy" "caching_optimized" {
+  name = "Managed-CachingOptimized"
+}
+
+data "aws_cloudfront_origin_request_policy" "all_viewer" {
+  name = "Managed-AllViewer"
+}
+
 # ─── CloudFront Distribution ─────────────────────────────────────────────────
 # Fronts the ALB for edge caching and SSL termination.
 
@@ -177,20 +191,13 @@ resource "aws_cloudfront_distribution" "app" {
     viewer_protocol_policy = "redirect-to-https"
     allowed_methods        = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
+    compress               = true
 
-    forwarded_values {
-      query_string = true
-      headers      = ["Authorization", "Origin", "Accept", "Host"]
-
-      cookies {
-        forward = "all"
-      }
-    }
-
-    min_ttl     = 0
-    default_ttl = 0
-    max_ttl     = 86400
-    compress    = true
+    # CachingDisabled: no edge caching for dynamic API responses.
+    cache_policy_id = data.aws_cloudfront_cache_policy.caching_disabled.id
+    # AllViewer: forward all viewer headers (incl. Authorization/Origin/Accept/Host),
+    # cookies, and query string to the ALB origin — preserves prior behavior.
+    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.all_viewer.id
   }
 
   # Cache static assets more aggressively via path pattern.
@@ -200,20 +207,11 @@ resource "aws_cloudfront_distribution" "app" {
     viewer_protocol_policy = "redirect-to-https"
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
+    compress               = true
 
-    forwarded_values {
-      query_string = false
-      headers      = []
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl     = 3600
-    default_ttl = 86400
-    max_ttl     = 604800
-    compress    = true
+    # CachingOptimized handles TTLs + gzip/brotli normalization and forwards
+    # no cookies/headers — ideal for immutable static assets.
+    cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id
   }
 
   restrictions {

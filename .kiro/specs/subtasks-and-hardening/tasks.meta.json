@@ -1,0 +1,164 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Add the missing pragmas in the exact ordered sequence": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857677259
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857691241
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857779126
+      }
+    ],
+    "2.1 Add the three managed-policy data sources": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857677303
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857692780
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857780195
+      }
+    ],
+    "2.2 Migrate the `default_cache_behavior` (API proxy) to managed policies": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857677345
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857791973
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857858261
+      }
+    ],
+    "2.3 Migrate the `/assets/*` `ordered_cache_behavior` to managed policy": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857677392
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857877144
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857939892
+      }
+    ],
+    "3.1 Confirm the frontend still builds": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857677497
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857945848
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857995566
+      }
+    ],
+    "3.2 Confirm both dev servers remain running without downtime": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857677552
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857946816
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857993740
+      }
+    ],
+    "1. GAP 1 — Add SQLite durability/concurrency pragmas (`backend/src/db.ts`)": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857779196
+      }
+    ],
+    "2. GAP 2 — Migrate CloudFront to managed cache policies (`infra/terraform/envs/dev/compute.tf`)": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857939959
+      }
+    ],
+    "3. Final cross-cutting verification (no regression to as-built feature)": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787857995637
+      }
+    ],
+    "2.4 Verify the Terraform config validates and is clean of `forwarded_values`": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787858010274
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787858956627
+      }
+    ],
+    "1.2 Verify the connection reports the expected pragma values": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787858011353
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787858957621
+      }
+    ],
+    "3.3 Live smoke check of subtask CRUD persistence after the db.ts pragma change": [
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787858964145
+      },
+      {
+        "executionId": "3d24901d-2db6-43b6-941c-6f70b8a08816",
+        "chatSessionId": "sess_08c9710b-20f3-4b3c-ae35-6be1864801d7",
+        "timestamp": 1787859097673
+      }
+    ]
+  }
+}

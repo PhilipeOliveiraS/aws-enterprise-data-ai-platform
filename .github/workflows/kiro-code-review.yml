@@ -7,29 +7,67 @@ on:
     branches: [ main ]
 
 jobs:
-  ai-code-review:
+  validate-and-review:
+    name: Full-Stack Quality Gate & AI Audit
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
-    
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node & Bun (Environment for TasKiro)
-        uses: oven-sh/setup-bun@v1
+      - name: Setup Bun Runtime
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - name: Install Kiro CLI (Headless Mode Setup)
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Install Workspace Dependencies
+        run: |
+          cd backend && bun install
+          cd ../frontend && bun install
+
+      - name: Run Backend Typecheck
+        run: |
+          cd backend
+          bun run --bun tsc --noEmit
+
+      - name: Run Frontend Build Verification
+        run: |
+          cd frontend
+          bun run build
+
+      - name: Validate Terraform Infrastructure
+        run: |
+          cd infra/terraform/envs/dev
+          terraform init -backend=false
+          terraform fmt -check
+          terraform validate
+
+      - name: Install Kiro CLI (Headless Mode)
         run: |
           curl -fsSL https://kiro.dev/install | bash
+          echo "$HOME/.kiro/bin" >> $GITHUB_PATH
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
           echo "$HOME/.bun/bin" >> $GITHUB_PATH
 
-      - name: Run Kiro AI Automated Code Review & Security Audit
+      - name: Run Kiro AI Autonomous Security & FinOps Audit
         env:
           KIRO_API_KEY: ${{ secrets.KIRO_API_KEY }}
         run: |
-          # Executa o Kiro CLI em modo non-interactive usando o agente de DevSecOps que criamos
-          kiro-cli chat --agent devsecops-reviewer --no-interactive --prompt "Review the changes in this repository for security vulnerabilities, IAM misconfigurations, and FinOps compliance, and output a structured report."
+          export PATH="$HOME/.kiro/bin:$HOME/.local/bin:$HOME/.bun/bin:$PATH"
+
+          if command -v kiro-cli >/dev/null 2>&1; then
+            CLI_CMD="kiro-cli"
+          elif command -v kiro >/dev/null 2>&1; then
+            CLI_CMD="kiro"
+          else
+            echo "Error: Kiro CLI binary not found in PATH."
+            exit 1
+          fi
+
+          $CLI_CMD chat --agent devsecops-reviewer --no-interactive --prompt "Review this pull request for security vulnerabilities, IAM misconfigurations, and AWS FinOps compliance. Output an executive markdown report."
