@@ -23,6 +23,32 @@ export interface TaskRow {
   updated_at: string;
 }
 
+export interface SubtaskRow {
+  id: string;
+  task_id: string;
+  title: string;
+  completed: number;
+  created_at: string;
+}
+
+export interface SubtaskDTO {
+  id: string;
+  taskId: string;
+  title: string;
+  completed: boolean;
+  createdAt: string;
+}
+
+export function toSubtaskDTO(row: SubtaskRow): SubtaskDTO {
+  return {
+    id: row.id,
+    taskId: row.task_id,
+    title: row.title,
+    completed: row.completed === 1,
+    createdAt: row.created_at,
+  };
+}
+
 /** Public shape returned by the API (tags decoded, no user_id leak). */
 export interface TaskDTO {
   id: string;
@@ -35,9 +61,12 @@ export interface TaskDTO {
   position: number;
   createdAt: string;
   updatedAt: string;
+  subtasks: SubtaskDTO[];
+  subtaskTotal: number;
+  subtaskCompleted: number;
 }
 
-export function toTaskDTO(row: TaskRow): TaskDTO {
+export function toTaskDTO(row: TaskRow, subtasks: SubtaskDTO[] = []): TaskDTO {
   let tags: string[] = [];
   try {
     const parsed = JSON.parse(row.tags);
@@ -56,5 +85,8 @@ export function toTaskDTO(row: TaskRow): TaskDTO {
     position: row.position,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+    subtasks,
+    subtaskTotal: subtasks.length,
+    subtaskCompleted: subtasks.filter((s) => s.completed).length,
   };
 }

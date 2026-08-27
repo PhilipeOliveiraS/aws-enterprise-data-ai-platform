@@ -1,7 +1,13 @@
 import { Elysia, t } from "elysia";
 import { db } from "./db.ts";
 import { authGuard } from "./auth.ts";
-import { toTaskDTO, type TaskRow } from "./types.ts";
+import {
+  toTaskDTO,
+  toSubtaskDTO,
+  type TaskRow,
+  type SubtaskRow,
+  type SubtaskDTO,
+} from "./types.ts";
 
 const statusSchema = t.Union([
   t.Literal("todo"),
@@ -26,6 +32,16 @@ function getOwnedTask(id: string, userId: string): TaskRow | null {
   );
 }
 
+/** Load all subtasks for a task, ordered by creation time. */
+function getSubtasks(taskId: string): SubtaskDTO[] {
+  return db
+    .query<SubtaskRow, [string]>(
+      "SELECT * FROM subtasks WHERE task_id = ? ORDER BY created_at",
+    )
+    .all(taskId)
+    .map(toSubtaskDTO);
+}
+
 export const taskRoutes = new Elysia({ prefix: "/tasks" })
   .use(authGuard)
 
@@ -36,7 +52,7 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
         "SELECT * FROM tasks WHERE user_id = ? ORDER BY status, position, created_at",
       )
       .all(user.id);
-    return rows.map(toTaskDTO);
+    return rows.map((row) => toTaskDTO(row, getSubtasks(row.id)));
   })
 
   // READ — single task.
@@ -46,7 +62,7 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
       set.status = 404;
       return { error: "Task not found" };
     }
-    return toTaskDTO(row);
+    return toTaskDTO(row, getSubtasks(row.id));
   })
 
   // CREATE
@@ -79,7 +95,7 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
 
       const row = getOwnedTask(id, user.id)!;
       set.status = 201;
-      return toTaskDTO(row);
+      return toTaskDTO(row, getSubtasks(id));
     },
     {
       body: t.Object({
@@ -128,7 +144,10 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
         user.id,
       );
 
-      return toTaskDTO(getOwnedTask(params.id, user.id)!);
+      return toTaskDTO(
+        getOwnedTask(params.id, user.id)!,
+        getSubtasks(params.id),
+      );
     },
     {
       body: t.Object({
@@ -167,7 +186,10 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
          WHERE id = ? AND user_id = ?`,
       ).run(body.status, position, params.id, user.id);
 
-      return toTaskDTO(getOwnedTask(params.id, user.id)!);
+      return toTaskDTO(
+        getOwnedTask(params.id, user.id)!,
+        getSubtasks(params.id),
+      );
     },
     {
       body: t.Object({
@@ -188,6 +210,89 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
       params.id,
       user.id,
     );
+    set.status = 204;
+    return null;
+  })
+
+  // CREATE SUBTASK — attach a subtask to an owned parent task.
+  .post(
+    "/:id/subtasks",
+    ({ user, params, body, set }) => {
+      const parent = getOwnedTask(params.id, user.id);
+      if (!parent) {
+        set.status = 404;
+        return { error: "Task not found" };
+      }
+
+      const id = crypto.randomUUID();
+      db.query(
+        "INSERT INTO subtasks (id, task_id, title, completed) VALUES (?, ?, ?, 0)",
+      ).run(id, params.id, body.title.trim());
+
+      const row = db
+        .query<SubtaskRow, [string]>("SELECT * FROM subtasks WHERE id = ?")
+        .get(id)!;
+
+      set.status = 201;
+      return toSubtaskDTO(row);
+    },
+    {
+      body: t.Object({
+        title: t.String({ minLength: 1 }),
+      }),
+    },
+  )
+
+  // TOGGLE SUBTASK — flip the completed flag.
+  // NOTE: the parent-task path param must be named ":id" to match the other
+  // "/:id/..." routes — the router rejects mixing param names at the same slot.
+  .patch("/:id/subtasks/:subtaskId/toggle", ({ user, params, set }) => {
+    const parent = getOwnedTask(params.id, user.id);
+    if (!parent) {
+      set.status = 404;
+      return { error: "Task not found" };
+    }
+
+    const subtask = db
+      .query<SubtaskRow, [string]>("SELECT * FROM subtasks WHERE id = ?")
+      .get(params.subtaskId);
+
+    if (!subtask || subtask.task_id !== params.id) {
+      set.status = 404;
+      return { error: "Subtask not found" };
+    }
+
+    const next = subtask.completed === 1 ? 0 : 1;
+    db.query("UPDATE subtasks SET completed = ? WHERE id = ?").run(
+      next,
+      params.subtaskId,
+    );
+
+    const row = db
+      .query<SubtaskRow, [string]>("SELECT * FROM subtasks WHERE id = ?")
+      .get(params.subtaskId)!;
+
+    return toSubtaskDTO(row);
+  })
+
+  // DELETE SUBTASK
+  .delete("/:id/subtasks/:subtaskId", ({ user, params, set }) => {
+    const parent = getOwnedTask(params.id, user.id);
+    if (!parent) {
+      set.status = 404;
+      return { error: "Task not found" };
+    }
+
+    const subtask = db
+      .query<SubtaskRow, [string]>("SELECT * FROM subtasks WHERE id = ?")
+      .get(params.subtaskId);
+
+    if (!subtask || subtask.task_id !== params.id) {
+      set.status = 404;
+      return { error: "Subtask not found" };
+    }
+
+    db.query("DELETE FROM subtasks WHERE id = ?").run(params.subtaskId);
     set.status = 204;
     return null;
   });
