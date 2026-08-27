@@ -1,22 +1,26 @@
 @import "tailwindcss";
 
 /* ============================================================
-   TasKiro — Cyberpunk 2077 Enterprise Theme
+   TasKiro — Graphite Theme
+   Clean grayscale (OKLCH) + single blue accent, monospace type,
+   hairline borders, zero heavy shadows.
    Tailwind v4 theme tokens (accessible via bg-*, text-*, etc.)
    ============================================================ */
 @theme {
-  --color-neon-cyan: #22d3ee;
-  --color-neon-cyan-soft: #67e8f9;
-  --color-neon-magenta: #e879f9;
-  --color-neon-magenta-soft: #f0abfc;
-  --color-neon-amber: #fbbf24;
+  /* Single focused blue accent (remaps the former neon-cyan token surface). */
+  --color-neon-cyan: oklch(0.6 0.18 250);
+  --color-neon-cyan-soft: oklch(0.72 0.15 250);
+  /* Secondary accent folds into the same blue for a monochrome + one-accent look. */
+  --color-neon-magenta: oklch(0.6 0.18 250);
+  --color-neon-magenta-soft: oklch(0.72 0.15 250);
+  --color-neon-amber: oklch(0.72 0.03 250);
 
-  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Geist Mono", "JetBrains Mono", ui-monospace, "SFMono-Regular",
+    "Menlo", "Consolas", monospace;
 
-  --shadow-neon-cyan: 0 0 0 1px rgba(34, 211, 238, 0.35),
-    0 0 18px -2px rgba(34, 211, 238, 0.45);
-  --shadow-neon-magenta: 0 0 0 1px rgba(232, 121, 249, 0.35),
-    0 0 18px -2px rgba(232, 121, 249, 0.45);
+  /* Flat hairline "elevation" — a crisp accent ring, no glow. */
+  --shadow-neon-cyan: 0 0 0 1px oklch(0.6 0.18 250 / 0.4);
+  --shadow-neon-magenta: 0 0 0 1px oklch(0.6 0.18 250 / 0.4);
 }
 
 @layer base {
@@ -28,34 +32,22 @@
 
   body {
     margin: 0;
-    background-color: #020617; /* slate-950 */
-    color: #e2e8f0; /* slate-200 */
+    background-color: oklch(0.16 0.005 250); /* near-black neutral */
+    color: oklch(0.9 0.005 250); /* light neutral text */
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01", "cv01";
   }
 
-  /* Ambient grid + glow backdrop */
+  /* Flat neutral backdrop — no neon glow, no grid noise. */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    background:
-      radial-gradient(
-        60rem 40rem at 15% -10%,
-        rgba(34, 211, 238, 0.12),
-        transparent 60%
-      ),
-      radial-gradient(
-        50rem 40rem at 100% 0%,
-        rgba(232, 121, 249, 0.1),
-        transparent 55%
-      ),
-      linear-gradient(rgba(148, 163, 184, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 3rem 3rem, 3rem 3rem;
+    background-color: oklch(0.16 0.005 250);
   }
 
   ::-webkit-scrollbar {
@@ -66,11 +58,11 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(34, 211, 238, 0.25);
+    background: oklch(0.35 0.005 250);
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(34, 211, 238, 0.4);
+    background: oklch(0.45 0.01 250);
   }
 
   *:focus-visible {
@@ -80,23 +72,17 @@
 }
 
 @layer components {
-  /* Frosted enterprise surface */
+  /* Flat engineering surface — opaque neutral panel with a hairline border. */
   .glass {
-    background: linear-gradient(
-      160deg,
-      rgba(15, 23, 42, 0.72),
-      rgba(2, 6, 23, 0.72)
-    );
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(148, 163, 184, 0.12);
+    background: oklch(0.19 0.005 250);
+    border: 1px solid oklch(0.28 0.005 250);
   }
 
   .glass-cyan {
-    border-color: rgba(34, 211, 238, 0.25);
+    border-color: oklch(0.6 0.18 250 / 0.4);
   }
   .glass-magenta {
-    border-color: rgba(232, 121, 249, 0.25);
+    border-color: oklch(0.6 0.18 250 / 0.4);
   }
 }
 

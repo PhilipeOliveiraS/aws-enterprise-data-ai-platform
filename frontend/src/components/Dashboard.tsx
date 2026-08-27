@@ -186,10 +186,10 @@ export function Dashboard() {
         <main className="flex flex-1 flex-col overflow-hidden">
           <div className="flex items-center justify-between px-6 py-4">
             <div>
-              <h2 className="text-xl font-bold tracking-tight text-white">
+              <h2 className="text-xl font-bold tracking-tight text-neutral-50">
                 Sprint Board
               </h2>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-neutral-500">
                 {loading
                   ? "Syncing…"
                   : `${tasks.length} tasks · Production workspace`}
@@ -198,7 +198,7 @@ export function Dashboard() {
             <button
               type="button"
               onClick={() => setModalOpen(true)}
-              className="rounded-lg border border-neon-magenta/50 bg-fuchsia-500/10 px-4 py-2 text-sm font-semibold text-neon-magenta-soft shadow-neon-magenta transition hover:bg-fuchsia-500/20 active:scale-[0.98] lg:hidden"
+              className="rounded-lg border border-neon-magenta/50 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-neon-magenta-soft shadow-neon-magenta transition hover:bg-blue-500/20 active:scale-[0.98] lg:hidden"
             >
               + Add
             </button>
@@ -219,7 +219,7 @@ export function Dashboard() {
 
           <div className="flex flex-1 gap-4 overflow-x-auto px-6 pb-6">
             {loading ? (
-              <div className="flex flex-1 items-center justify-center text-sm text-slate-500">
+              <div className="flex flex-1 items-center justify-center text-sm text-neutral-500">
                 Loading board…
               </div>
             ) : (

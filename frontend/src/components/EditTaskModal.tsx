@@ -190,26 +190,26 @@ export function EditTaskModal({
         type="button"
         aria-label="Close modal"
         onClick={onClose}
-        className="absolute inset-0 animate-fade-in bg-slate-950/70 backdrop-blur-sm"
+        className="absolute inset-0 animate-fade-in bg-neutral-950/70 backdrop-blur-sm"
       />
 
       {/* Panel */}
-      <div className="glass glass-cyan animate-pop-in relative w-full max-w-lg rounded-2xl p-6 shadow-[0_0_40px_-8px_rgba(34,211,238,0.35)]">
+      <div className="glass glass-cyan animate-pop-in relative w-full max-w-lg rounded-2xl p-6">
         <div className="mb-5 flex items-start justify-between">
           <div>
             <h2
               id="edit-task-title"
-              className="text-lg font-bold tracking-tight text-white"
+              className="text-lg font-bold tracking-tight text-neutral-50"
             >
               Edit Task
             </h2>
-            <p className="text-xs text-slate-500">Update an existing item</p>
+            <p className="text-xs text-neutral-500">Update an existing item</p>
           </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="grid h-8 w-8 place-items-center rounded-lg border border-slate-700/60 text-slate-400 transition hover:border-neon-magenta/50 hover:text-neon-magenta-soft"
+            className="grid h-8 w-8 place-items-center rounded-lg border border-neutral-700/60 text-neutral-400 transition hover:border-neon-magenta/50 hover:text-neon-magenta-soft"
           >
             ✕
           </button>
@@ -219,7 +219,7 @@ export function EditTaskModal({
           <div>
             <label
               htmlFor="edit-task-title-input"
-              className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+              className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
             >
               Title
             </label>
@@ -233,7 +233,7 @@ export function EditTaskModal({
               placeholder="e.g. Configure ALB target group"
               autoFocus
               aria-invalid={titleError ? true : undefined}
-              className="w-full rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 transition focus:border-neon-cyan/50"
+              className="w-full rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 placeholder:text-neutral-600 transition focus:border-neon-cyan/50"
             />
             {titleError && (
               <p
@@ -248,7 +248,7 @@ export function EditTaskModal({
           <div>
             <label
               htmlFor="edit-task-desc"
-              className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+              className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
             >
               Description
             </label>
@@ -258,7 +258,7 @@ export function EditTaskModal({
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
               placeholder="Short summary of the work…"
-              className="w-full resize-none rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 transition focus:border-neon-cyan/50"
+              className="w-full resize-none rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 placeholder:text-neutral-600 transition focus:border-neon-cyan/50"
             />
           </div>
 
@@ -266,7 +266,7 @@ export function EditTaskModal({
             <div>
               <label
                 htmlFor="edit-task-priority"
-                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
               >
                 Priority
               </label>
@@ -274,7 +274,7 @@ export function EditTaskModal({
                 id="edit-task-priority"
                 value={priority}
                 onChange={(e) => setPriority(e.target.value as Priority)}
-                className="w-full rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 transition focus:border-neon-cyan/50"
+                className="w-full rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 transition focus:border-neon-cyan/50"
               >
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
@@ -285,7 +285,7 @@ export function EditTaskModal({
             <div>
               <label
                 htmlFor="edit-task-assignee"
-                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
               >
                 Assignee
               </label>
@@ -294,7 +294,7 @@ export function EditTaskModal({
                 value={assignee}
                 onChange={(e) => setAssignee(e.target.value)}
                 placeholder="e.g. Neo Anderson"
-                className="w-full rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 transition focus:border-neon-cyan/50"
+                className="w-full rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 placeholder:text-neutral-600 transition focus:border-neon-cyan/50"
               />
             </div>
           </div>
@@ -302,7 +302,7 @@ export function EditTaskModal({
           <div>
             <label
               htmlFor="edit-task-tags"
-              className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+              className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
             >
               Tags
             </label>
@@ -311,13 +311,13 @@ export function EditTaskModal({
               value={tags}
               onChange={(e) => setTags(e.target.value)}
               placeholder="Comma-separated, e.g. infra, urgent"
-              className="w-full rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 transition focus:border-neon-cyan/50"
+              className="w-full rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 placeholder:text-neutral-600 transition focus:border-neon-cyan/50"
             />
           </div>
 
-          <div className="border-t border-slate-800/60 pt-4">
+          <div className="border-t border-neutral-800/60 pt-4">
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+              <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
                 Subtasks
               </span>
               {subtasks.length > 0 && (
@@ -343,7 +343,7 @@ export function EditTaskModal({
                   return (
                     <li
                       key={sub.id}
-                      className="flex items-center gap-2 rounded-lg border border-slate-800/60 bg-slate-900/40 px-2.5 py-1.5"
+                      className="flex items-center gap-2 rounded-lg border border-neutral-800/60 bg-neutral-900/40 px-2.5 py-1.5"
                     >
                       <input
                         type="checkbox"
@@ -358,8 +358,8 @@ export function EditTaskModal({
                       <span
                         className={`flex-1 text-sm transition ${
                           sub.completed
-                            ? "text-slate-500 line-through"
-                            : "text-slate-200"
+                            ? "text-neutral-500 line-through"
+                            : "text-neutral-200"
                         }`}
                       >
                         {sub.title}
@@ -370,7 +370,7 @@ export function EditTaskModal({
                         onClick={() => handleDeleteSubtask(sub)}
                         aria-label={`Delete subtask "${sub.title}"`}
                         title="Delete subtask"
-                        className="grid h-6 w-6 shrink-0 place-items-center rounded-md border border-slate-700/60 text-xs text-slate-400 transition hover:border-rose-500/50 hover:text-rose-300 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="grid h-6 w-6 shrink-0 place-items-center rounded-md border border-neutral-700/60 text-xs text-neutral-400 transition hover:border-rose-500/50 hover:text-rose-300 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         ✕
                       </button>
@@ -392,13 +392,13 @@ export function EditTaskModal({
                 }}
                 placeholder="Add a subtask…"
                 aria-label="New subtask title"
-                className="w-full rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 transition focus:border-neon-cyan/50"
+                className="w-full rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 placeholder:text-neutral-600 transition focus:border-neon-cyan/50"
               />
               <button
                 type="button"
                 onClick={() => void handleAddSubtask()}
                 disabled={addingSubtask || newSubtask.trim() === ""}
-                className="shrink-0 rounded-lg border border-neon-cyan/50 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-neon-cyan-soft shadow-neon-cyan transition hover:bg-cyan-500/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+                className="shrink-0 rounded-lg border border-neon-cyan/50 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-neon-cyan-soft shadow-neon-cyan transition hover:bg-blue-500/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {addingSubtask ? "Adding…" : "Add"}
               </button>
@@ -409,14 +409,14 @@ export function EditTaskModal({
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-slate-700/60 px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800/50"
+              className="rounded-lg border border-neutral-700/60 px-4 py-2 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800/50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="rounded-lg border border-neon-cyan/50 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-neon-cyan-soft shadow-neon-cyan transition hover:bg-cyan-500/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-lg border border-neon-cyan/50 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-neon-cyan-soft shadow-neon-cyan transition hover:bg-blue-500/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {submitting ? "Saving…" : "Save Changes"}
             </button>

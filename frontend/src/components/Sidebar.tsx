@@ -20,7 +20,7 @@ const WORKSPACE_NAV: NavItem[] = [
 function NavList({ items, label }: { items: NavItem[]; label: string }) {
   return (
     <div>
-      <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-600">
+      <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-widest text-neutral-600">
         {label}
       </p>
       <ul className="space-y-1">
@@ -31,8 +31,8 @@ function NavList({ items, label }: { items: NavItem[]; label: string }) {
               aria-current={item.active ? "page" : undefined}
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition ${
                 item.active
-                  ? "border border-neon-cyan/30 bg-cyan-500/10 font-semibold text-neon-cyan-soft"
-                  : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-200"
+                  ? "border border-neon-cyan/30 bg-blue-500/10 font-semibold text-neon-cyan-soft"
+                  : "text-neutral-400 hover:bg-neutral-800/50 hover:text-neutral-200"
               }`}
             >
               <span className="w-4 text-center text-base" aria-hidden>
@@ -49,17 +49,17 @@ function NavList({ items, label }: { items: NavItem[]; label: string }) {
 
 export function Sidebar() {
   return (
-    <aside className="glass hidden w-60 shrink-0 flex-col justify-between border-r border-slate-800/60 p-4 lg:flex">
+    <aside className="glass hidden w-60 shrink-0 flex-col justify-between border-r border-neutral-800/60 p-4 lg:flex">
       <nav className="space-y-6">
         <NavList items={PRIMARY_NAV} label="Workflow" />
         <NavList items={WORKSPACE_NAV} label="Workspace" />
       </nav>
 
-      <div className="rounded-xl border border-neon-magenta/25 bg-fuchsia-500/5 p-3">
+      <div className="rounded-xl border border-neon-magenta/25 bg-blue-500/5 p-3">
         <p className="text-xs font-semibold text-neon-magenta-soft">
           TASKIRO-AI-LAB
         </p>
-        <p className="mt-1 text-[11px] leading-relaxed text-slate-500">
+        <p className="mt-1 text-[11px] leading-relaxed text-neutral-500">
           Production workspace · managed by Kiro Agent
         </p>
       </div>

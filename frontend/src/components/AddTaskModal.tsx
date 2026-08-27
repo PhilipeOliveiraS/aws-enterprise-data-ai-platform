@@ -77,20 +77,20 @@ export function AddTaskModal({ open, onClose, onCreate }: AddTaskModalProps) {
         type="button"
         aria-label="Close modal"
         onClick={onClose}
-        className="absolute inset-0 animate-fade-in bg-slate-950/70 backdrop-blur-sm"
+        className="absolute inset-0 animate-fade-in bg-neutral-950/70 backdrop-blur-sm"
       />
 
       {/* Panel */}
-      <div className="glass glass-cyan animate-pop-in relative w-full max-w-lg rounded-2xl p-6 shadow-[0_0_40px_-8px_rgba(34,211,238,0.35)]">
+      <div className="glass glass-cyan animate-pop-in relative w-full max-w-lg rounded-2xl p-6">
         <div className="mb-5 flex items-start justify-between">
           <div>
             <h2
               id="add-task-title"
-              className="text-lg font-bold tracking-tight text-white"
+              className="text-lg font-bold tracking-tight text-neutral-50"
             >
               Create Task
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-neutral-500">
               Add a new item to the board
             </p>
           </div>
@@ -98,7 +98,7 @@ export function AddTaskModal({ open, onClose, onCreate }: AddTaskModalProps) {
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="grid h-8 w-8 place-items-center rounded-lg border border-slate-700/60 text-slate-400 transition hover:border-neon-magenta/50 hover:text-neon-magenta-soft"
+            className="grid h-8 w-8 place-items-center rounded-lg border border-neutral-700/60 text-neutral-400 transition hover:border-neon-magenta/50 hover:text-neon-magenta-soft"
           >
             ✕
           </button>
@@ -108,7 +108,7 @@ export function AddTaskModal({ open, onClose, onCreate }: AddTaskModalProps) {
           <div>
             <label
               htmlFor="task-title"
-              className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+              className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
             >
               Title
             </label>
@@ -122,7 +122,7 @@ export function AddTaskModal({ open, onClose, onCreate }: AddTaskModalProps) {
               placeholder="e.g. Configure ALB target group"
               autoFocus
               aria-invalid={titleError ? true : undefined}
-              className="w-full rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 transition focus:border-neon-cyan/50"
+              className="w-full rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 placeholder:text-neutral-600 transition focus:border-neon-cyan/50"
             />
             {titleError && (
               <p
@@ -137,7 +137,7 @@ export function AddTaskModal({ open, onClose, onCreate }: AddTaskModalProps) {
           <div>
             <label
               htmlFor="task-desc"
-              className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+              className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
             >
               Description
             </label>
@@ -147,7 +147,7 @@ export function AddTaskModal({ open, onClose, onCreate }: AddTaskModalProps) {
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
               placeholder="Short summary of the work…"
-              className="w-full resize-none rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 transition focus:border-neon-cyan/50"
+              className="w-full resize-none rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 placeholder:text-neutral-600 transition focus:border-neon-cyan/50"
             />
           </div>
 
@@ -155,7 +155,7 @@ export function AddTaskModal({ open, onClose, onCreate }: AddTaskModalProps) {
             <div>
               <label
                 htmlFor="task-priority"
-                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
               >
                 Priority
               </label>
@@ -163,7 +163,7 @@ export function AddTaskModal({ open, onClose, onCreate }: AddTaskModalProps) {
                 id="task-priority"
                 value={priority}
                 onChange={(e) => setPriority(e.target.value as Priority)}
-                className="w-full rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 transition focus:border-neon-cyan/50"
+                className="w-full rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 transition focus:border-neon-cyan/50"
               >
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
@@ -174,7 +174,7 @@ export function AddTaskModal({ open, onClose, onCreate }: AddTaskModalProps) {
             <div>
               <label
                 htmlFor="task-column"
-                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
               >
                 Column
               </label>
@@ -182,7 +182,7 @@ export function AddTaskModal({ open, onClose, onCreate }: AddTaskModalProps) {
                 id="task-column"
                 value={status}
                 onChange={(e) => setStatus(e.target.value as TaskStatus)}
-                className="w-full rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 transition focus:border-neon-cyan/50"
+                className="w-full rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 transition focus:border-neon-cyan/50"
               >
                 <option value="todo">To Do</option>
                 <option value="in-progress">In Progress</option>
@@ -195,14 +195,14 @@ export function AddTaskModal({ open, onClose, onCreate }: AddTaskModalProps) {
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-slate-700/60 px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800/50"
+              className="rounded-lg border border-neutral-700/60 px-4 py-2 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800/50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="rounded-lg border border-neon-magenta/50 bg-fuchsia-500/10 px-4 py-2 text-sm font-semibold text-neon-magenta-soft shadow-neon-magenta transition hover:bg-fuchsia-500/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-lg border border-neon-magenta/50 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-neon-magenta-soft shadow-neon-magenta transition hover:bg-blue-500/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {submitting ? "Creating…" : "Create Task"}
             </button>

@@ -1,9 +1,9 @@
 import type { Priority } from "@/types/task";
 
 const STYLES: Record<Priority, string> = {
-  low: "border-slate-600/60 text-slate-300 bg-slate-800/40",
-  medium: "border-neon-cyan/40 text-neon-cyan-soft bg-cyan-500/10",
-  high: "border-neon-magenta/40 text-neon-magenta-soft bg-fuchsia-500/10",
+  low: "border-neutral-600/60 text-neutral-300 bg-neutral-800/40",
+  medium: "border-neon-cyan/40 text-neon-cyan-soft bg-blue-500/10",
+  high: "border-neon-magenta/40 text-neon-magenta-soft bg-blue-500/10",
   critical: "border-rose-500/50 text-rose-300 bg-rose-500/10",
 };
 

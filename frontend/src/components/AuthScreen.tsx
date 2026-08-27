@@ -70,27 +70,27 @@ export function AuthScreen() {
       <div className="w-full max-w-md">
         {/* Brand */}
         <div className="mb-6 flex flex-col items-center text-center">
-          <div className="mb-3 grid h-14 w-14 place-items-center rounded-2xl border border-neon-cyan/40 bg-cyan-500/10 shadow-neon-cyan">
+          <div className="mb-3 grid h-14 w-14 place-items-center rounded-2xl border border-neon-cyan/40 bg-blue-500/10 shadow-neon-cyan">
             <span className="text-2xl font-black text-neon-cyan-soft">T</span>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">
+          <h1 className="text-2xl font-bold tracking-tight text-neutral-50">
             Tas<span className="text-neon-cyan-soft">Kiro</span>
           </h1>
-          <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
+          <p className="text-xs uppercase tracking-[0.3em] text-neutral-500">
             Enterprise Task Command
           </p>
         </div>
 
-        <div className="glass glass-cyan animate-pop-in rounded-2xl p-6 shadow-[0_0_40px_-10px_rgba(34,211,238,0.35)]">
+        <div className="glass glass-cyan animate-pop-in rounded-2xl p-6">
           {/* Mode toggle */}
-          <div className="mb-6 grid grid-cols-2 gap-1 rounded-xl border border-slate-800/70 bg-slate-900/50 p-1">
+          <div className="mb-6 grid grid-cols-2 gap-1 rounded-xl border border-neutral-800/70 bg-neutral-900/50 p-1">
             <button
               type="button"
               onClick={() => !isLogin && switchMode()}
               className={`rounded-lg py-2 text-sm font-semibold transition ${
                 isLogin
-                  ? "bg-cyan-500/15 text-neon-cyan-soft shadow-neon-cyan"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-blue-500/15 text-neon-cyan-soft shadow-neon-cyan"
+                  : "text-neutral-400 hover:text-neutral-200"
               }`}
             >
               Sign In
@@ -100,8 +100,8 @@ export function AuthScreen() {
               onClick={() => isLogin && switchMode()}
               className={`rounded-lg py-2 text-sm font-semibold transition ${
                 !isLogin
-                  ? "bg-fuchsia-500/15 text-neon-magenta-soft shadow-neon-magenta"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-blue-500/15 text-neon-magenta-soft shadow-neon-magenta"
+                  : "text-neutral-400 hover:text-neutral-200"
               }`}
             >
               Register
@@ -113,7 +113,7 @@ export function AuthScreen() {
               <div>
                 <label
                   htmlFor="displayName"
-                  className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+                  className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
                 >
                   Display Name
                 </label>
@@ -123,7 +123,7 @@ export function AuthScreen() {
                   onChange={(e) => setDisplayName(e.target.value)}
                   required={!isLogin}
                   placeholder="Neo Anderson"
-                  className="w-full rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 transition focus:border-neon-cyan/50"
+                  className="w-full rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 placeholder:text-neutral-600 transition focus:border-neon-cyan/50"
                 />
               </div>
             )}
@@ -131,7 +131,7 @@ export function AuthScreen() {
             <div>
               <label
                 htmlFor="email"
-                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
               >
                 Email
               </label>
@@ -143,14 +143,14 @@ export function AuthScreen() {
                 required
                 autoComplete="email"
                 placeholder="you@taskiro.io"
-                className="w-full rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 transition focus:border-neon-cyan/50"
+                className="w-full rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 placeholder:text-neutral-600 transition focus:border-neon-cyan/50"
               />
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+                className="mb-1 block text-xs font-semibold uppercase tracking-wider text-neutral-400"
               >
                 Password
               </label>
@@ -162,7 +162,7 @@ export function AuthScreen() {
                 required
                 autoComplete={isLogin ? "current-password" : "new-password"}
                 placeholder={isLogin ? "••••••••" : "At least 8 characters"}
-                className="w-full rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 transition focus:border-neon-cyan/50"
+                className="w-full rounded-lg border border-neutral-800/70 bg-neutral-900/60 px-3 py-2 text-sm text-neutral-200 placeholder:text-neutral-600 transition focus:border-neon-cyan/50"
               />
             </div>
 
@@ -180,8 +180,8 @@ export function AuthScreen() {
               disabled={submitting}
               className={`w-full rounded-lg border px-4 py-2.5 text-sm font-semibold transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 ${
                 isLogin
-                  ? "border-neon-cyan/50 bg-cyan-500/10 text-neon-cyan-soft shadow-neon-cyan hover:bg-cyan-500/20"
-                  : "border-neon-magenta/50 bg-fuchsia-500/10 text-neon-magenta-soft shadow-neon-magenta hover:bg-fuchsia-500/20"
+                  ? "border-neon-cyan/50 bg-blue-500/10 text-neon-cyan-soft shadow-neon-cyan hover:bg-blue-500/20"
+                  : "border-neon-magenta/50 bg-blue-500/10 text-neon-magenta-soft shadow-neon-magenta hover:bg-blue-500/20"
               }`}
             >
               {submitting
@@ -193,7 +193,7 @@ export function AuthScreen() {
           </form>
         </div>
 
-        <p className="mt-4 text-center text-xs text-slate-600">
+        <p className="mt-4 text-center text-xs text-neutral-600">
           {isLogin ? "No account yet?" : "Already registered?"}{" "}
           <button
             type="button"
