@@ -1,0 +1,12 @@
+{
+  "name": "Project Context Injector",
+  "version": "1.0.0",
+  "description": "Injects active project boundaries and FinOps compliance guidelines into agent prompts",
+  "when": {
+    "type": "promptSubmit"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "echo 'Active Context: TasKiro Full-Stack | Stack: React 19 + Tailwind v4 + ElysiaJS + bun:sqlite | Compliance: AWS FinOps & Zero Hardcoded Secrets'"
+  }
+}

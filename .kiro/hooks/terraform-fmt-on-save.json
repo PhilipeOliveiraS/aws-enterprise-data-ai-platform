@@ -1,0 +1,13 @@
+{
+  "name": "Terraform Canonical Formatter",
+  "version": "1.0.0",
+  "description": "Runs terraform fmt automatically when IaC files are modified",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["infra/terraform/**/*.tf"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "cd infra/terraform/envs/dev && terraform fmt"
+  }
+}

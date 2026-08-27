@@ -1,0 +1,12 @@
+{
+  "name": "DevSecOps and FinOps Final Audit",
+  "version": "1.0.0",
+  "description": "Audits session outputs against .kiro/steering/aws-standards.md on agent stop",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Perform a final architectural review of modified files. Confirm full alignment with .kiro/steering/aws-standards.md and ensure zero leaked secrets or unoptimized cloud resources."
+  }
+}

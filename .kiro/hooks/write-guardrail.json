@@ -1,0 +1,13 @@
+{
+  "name": "Write Operations Security Guardrail",
+  "version": "1.0.0",
+  "description": "Intercepts write operations to prevent secret exposure and unhandled destructive actions",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": ["write"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Inspect this write operation. Verify that no hardcoded AWS/API secrets are being introduced, strict typing is preserved, and error handling aligns with our steering guidelines."
+  }
+}
