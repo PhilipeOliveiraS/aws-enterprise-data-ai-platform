@@ -1,0 +1,13 @@
+{
+  "name": "Security Guardrail",
+  "version": "1.0.0",
+  "description": "Inspects write operations before execution to block hardcoded secrets, API keys, tokens, or plaintext credentials",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": ["write"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Inspect this write operation to ensure it contains zero hardcoded API keys, secrets, tokens, or plaintext credentials. Block the operation if sensitive data is detected."
+  }
+}

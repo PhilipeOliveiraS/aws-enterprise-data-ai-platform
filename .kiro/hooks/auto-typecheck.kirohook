@@ -1,0 +1,13 @@
+{
+  "name": "Automated TypeScript Compiler Check",
+  "version": "1.0.0",
+  "description": "Executes a non-emitting typecheck across the backend and frontend packages after write operations",
+  "when": {
+    "type": "postToolUse",
+    "toolTypes": ["write"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "cd backend && bun run --bun tsc --noEmit && cd ../frontend && bun run --bun tsc -b"
+  }
+}

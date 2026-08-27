@@ -1,0 +1,12 @@
+{
+  "name": "Full Code Review",
+  "version": "1.0.0",
+  "description": "Manually triggered comprehensive audit of the codebase for architecture, security, accessibility, and performance",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Perform a comprehensive audit of the entire codebase for architecture compliance, security vulnerabilities, accessibility, and performance bottlenecks."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Code Review on Save",
+  "version": "1.0.0",
+  "description": "Reviews saved backend/frontend source files for clean code, error handling, accessibility, and optimization",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "frontend/src/**/*.{ts,tsx}",
+      "backend/src/**/*.ts"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review this saved TypeScript/TSX file for clean code standards, error handling, accessibility, and optimization opportunities."
+  }
+}
