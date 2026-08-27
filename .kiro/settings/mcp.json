@@ -1,0 +1,42 @@
+{
+  "mcpServers": {
+    "sqlite-taskiro": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-sqlite",
+        "--db-path",
+        "backend/taskiro.sqlite"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "read_query",
+        "list_tables",
+        "describe_table"
+      ]
+    },
+    "fetch-docs": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "fetch"
+      ]
+    },
+    "git-platform": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "."
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "git_status",
+        "git_diff_unstaged",
+        "git_log"
+      ]
+    }
+  }
+}
