@@ -1,11 +1,11 @@
 {
   "mcpServers": {
     "sqlite-taskiro": {
-      "command": "uvx",
+      "command": "/home/philipe/.bun/bin/bunx",
       "args": [
-        "mcp-server-sqlite",
-        "--db-path",
-        "backend/taskiro.sqlite"
+        "-y",
+        "mcp-server-sqlite-npx",
+        "/home/philipe/Projetos/aws-enterprise-data-ai-platform/backend/taskiro.sqlite"
       ],
       "disabled": false,
       "autoApprove": [
@@ -15,7 +15,7 @@
       ]
     },
     "fetch-docs": {
-      "command": "uvx",
+      "command": "/home/philipe/.local/bin/uvx",
       "args": [
         "mcp-server-fetch"
       ],
@@ -25,11 +25,11 @@
       ]
     },
     "git-platform": {
-      "command": "uvx",
+      "command": "/home/philipe/.local/bin/uvx",
       "args": [
         "mcp-server-git",
         "--repository",
-        "."
+        "/home/philipe/Projetos/aws-enterprise-data-ai-platform"
       ],
       "disabled": false,
       "autoApprove": [
