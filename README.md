@@ -84,6 +84,14 @@ Documenting the architectural journey from the initial MVP to an enterprise-grad
   <img src="assets/screenshots/05-agentic-iac-s3-security-audit-automation.gif" width="850" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" alt="Agentic AI Auditing S3 Terraform Module">
 </p>
 
+### Phase 5: Agentic Architecture & Cloud Planning (Agentic RAG)
+
+*Demonstrating advanced cloud architecture planning using Agentic RAG. The Kiro Agent autonomously queries AWS Knowledge Bases via MCP to design a serverless architecture, perform FinOps cost comparisons (Aurora Serverless vs. DynamoDB), and define DevSecOps baselines, grounding its decisions in real-time official AWS documentation.*
+
+<p align="center">
+  <img src="assets/screenshots/06-agentic-aws-architecture-planning.gif" width="850" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" alt="Agentic RAG AWS Architecture Planning">
+</p>
+
 ---
 
 ## 🏗️ System Architecture & AI Workflow
