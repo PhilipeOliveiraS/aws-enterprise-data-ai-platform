@@ -10,17 +10,17 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.6"
+    }
   }
 }
 
 provider "aws" {
   region = var.aws_region
 
-  default_tags {
-    tags = {
-      Environment = var.environment
-      CostCenter  = "TASKIRO-AI-LAB"
-      ManagedBy   = "Kiro-Agent"
-    }
-  }
+  skip_credentials_validation = false
+  skip_requesting_account_id  = false
+  skip_metadata_api_check     = true
 }

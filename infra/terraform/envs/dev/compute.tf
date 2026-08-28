@@ -151,20 +151,6 @@ resource "aws_lb_listener" "http" {
   }
 }
 
-# ─── CloudFront Managed Policies (AWS-managed; data sources only, no tags) ───
-
-data "aws_cloudfront_cache_policy" "caching_disabled" {
-  name = "Managed-CachingDisabled"
-}
-
-data "aws_cloudfront_cache_policy" "caching_optimized" {
-  name = "Managed-CachingOptimized"
-}
-
-data "aws_cloudfront_origin_request_policy" "all_viewer" {
-  name = "Managed-AllViewer"
-}
-
 # ─── CloudFront Distribution ─────────────────────────────────────────────────
 # Fronts the ALB for edge caching and SSL termination.
 
@@ -193,11 +179,11 @@ resource "aws_cloudfront_distribution" "app" {
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
     compress               = true
 
-    # CachingDisabled: no edge caching for dynamic API responses.
-    cache_policy_id = data.aws_cloudfront_cache_policy.caching_disabled.id
-    # AllViewer: forward all viewer headers (incl. Authorization/Origin/Accept/Host),
-    # cookies, and query string to the ALB origin — preserves prior behavior.
-    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.all_viewer.id
+    # Managed-CachingDisabled (AWS Managed Policy ID)
+    cache_policy_id = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+
+    # Managed-AllViewer (AWS Managed Policy ID)
+    origin_request_policy_id = "216adef6-5c7f-47e4-b989-5492eafa07d3"
   }
 
   # Cache static assets more aggressively via path pattern.
@@ -209,9 +195,8 @@ resource "aws_cloudfront_distribution" "app" {
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
     compress               = true
 
-    # CachingOptimized handles TTLs + gzip/brotli normalization and forwards
-    # no cookies/headers — ideal for immutable static assets.
-    cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id
+    # Managed-CachingOptimized (AWS Managed Policy ID)
+    cache_policy_id = "658327ea-f89d-4fab-a63d-7e88637488eb"
   }
 
   restrictions {
