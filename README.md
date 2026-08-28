@@ -1,14 +1,14 @@
 # TasKiro — AWS Enterprise AI Platform
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge" alt="Status">
-  <img src="https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white" alt="Bun">
-  <img src="https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
-  <img src="https://img.shields.io/badge/Tailwind_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind">
-  <img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
-  <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white" alt="AWS">
-  <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="GitHub Actions">
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License">
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge" alt="Status">
+  <img src="https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white" alt="Bun">
+  <img src="https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
+  <img src="https://img.shields.io/badge/Tailwind_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind">
+  <img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
+  <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white" alt="AWS">
+  <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="GitHub Actions">
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License">
 </p>
 
 ---
@@ -41,21 +41,21 @@ This project acts as an advanced engineering laboratory, elevating a standard we
 
 - ✅ **AI Solutions Architecture:** Agent orchestration using Model Context Protocol (MCP) and custom Agent Skills.
 - ✅ **High-Performance Full-Stack:** Containerless architecture utilizing Bun, React 19, ElysiaJS, and `bun:sqlite`.
-- ✅ **Cloud-Ready Infrastructure:** Resilient AWS deployment design (CloudFront, ALB, Private EC2, NAT Gateway).
-- ✅ **Security & Governance:** Strict IAM Least Privilege policies and automated FinOps tagging.
+- ✅ **Cloud-Ready Infrastructure:** Resilient AWS deployment design (CloudFront, ALB, Private EC2, NAT Gateway, S3 & KMS).
+- ✅ **Security & Governance:** Strict IAM Least Privilege policies, Customer Managed KMS Keys, and automated FinOps tagging.
 
 ---
 
 ## 📸 Platform Evolution & Visual Architecture
 
-Documenting the architectural journey from the initial MVP to an enterprise-grade platform, demonstrating continuous iteration and frontend UI refactoring.
+Documenting the architectural journey from the initial MVP to an enterprise-grade platform, demonstrating continuous iteration, frontend UI refactoring, and autonomous IaC generation.
 
 ### Phase 1: Core Functional Dashboard
 
 *The first successful deployment of the TasKiro backend and frontend, validating core task management routing, state persistence, and the initial aesthetic.*
 
 <p align="center">
-  <img src="assets/screenshots/01-mvp-kanban-board.png" width="800" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" alt="MVP Kanban Board">
+  <img src="assets/screenshots/01-mvp-kanban-board.png" width="800" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" alt="MVP Kanban Board">
 </p>
 
 ### Phase 2: Design System Refactoring (Graphite UI via Agent Skills)
@@ -63,9 +63,17 @@ Documenting the architectural journey from the initial MVP to an enterprise-grad
 *Demonstrating the UI transformation. The original authentication screen (left) versus the enterprise restyling using the Graphite UI design system (right), achieved through strict Agent Skills context injection.*
 
 <p align="center">
-  <img src="assets/screenshots/02-auth-neon-legacy.png" width="400" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" alt="Original Auth UI">
-  &nbsp;&nbsp;
-  <img src="assets/screenshots/03-auth-graphite-modern.png" width="400" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" alt="Graphite Auth UI">
+  <img src="assets/screenshots/02-auth-neon-legacy.png" width="400" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" alt="Original Auth UI">
+  &nbsp;&nbsp;
+  <img src="assets/screenshots/03-auth-graphite-modern.png" width="400" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" alt="Graphite Auth UI">
+</p>
+
+### Phase 3: Autonomous IaC Provisioning via AWS Documentation MCP Server
+
+*Real-time demonstration of Kiro Agent leveraging the AWS Documentation MCP Server to query 2026 S3/KMS security policies and generating production-ready Terraform code.*
+
+<p align="center">
+  <img src="assets/screenshots/04-agentic-iac-mcp-s3-provisioning.gif" width="900" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" alt="Agentic IaC Terraform MCP Provisioning">
 </p>
 
 ---
@@ -76,36 +84,40 @@ Documenting the architectural journey from the initial MVP to an enterprise-grad
 
 ```mermaid
 graph TD
-    %% Nodes
-    User((End User))
-    AI[AI Agent / Kiro]
-    MCP{MCP Servers}
-    GitHub[GitHub Actions CI/CD]
-    CloudFront[AWS CloudFront]
-    ALB[Application Load Balancer]
-    EC2[Private EC2 Instance]
-    API[ElysiaJS REST API]
-    DB[(bun:sqlite on EBS)]
+    %% Nodes
+    User((End User))
+    AI[AI Agent / Kiro]
+    MCP{MCP Servers}
+    GitHub[GitHub Actions CI/CD]
+    CloudFront[AWS CloudFront]
+    ALB[Application Load Balancer]
+    EC2[Private EC2 Instance]
+    API[ElysiaJS REST API]
+    DB[(bun:sqlite on EBS)]
+    S3[(AWS S3 + KMS)]
 
-    %% Flow
-    User -->|HTTPS| CloudFront
-    CloudFront -->|Forwards| ALB
-    ALB -->|Routes to| EC2
-    EC2 --> API
-    API -->|I/O| DB
+    %% Flow
+    User -->|HTTPS| CloudFront
+    CloudFront -->|Forwards| ALB
+    ALB -->|Routes to| EC2
+    EC2 --> API
+    API -->|I/O| DB
+    API -->|Attachments| S3
 
-    AI -->|Queries| MCP
-    MCP -->|Real-time Data| DB
-    MCP -->|Codebase| GitHub
-    GitHub -->|Automated Deploy| EC2
+    AI -->|Queries| MCP
+    MCP -->|Real-time Data| DB
+    MCP -->|AWS Docs| S3
+    MCP -->|Codebase| GitHub
+    GitHub -->|Automated Deploy| EC2
 
-    %% Styling
-    style User fill:#f9f,stroke:#333,stroke-width:2px
-    style AI fill:#ffd700,stroke:#333,stroke-width:2px
-    style MCP fill:#ff9900,stroke:#333,stroke-width:2px
-    style CloudFront fill:#00bfff,stroke:#333,stroke-width:2px
-    style EC2 fill:#ff9900,stroke:#333,stroke-width:2px
-    style DB fill:#90ee90,stroke:#333,stroke-width:2px
+    %% Styling
+    style User fill:#f9f,stroke:#333,stroke-width:2px
+    style AI fill:#ffd700,stroke:#333,stroke-width:2px
+    style MCP fill:#ff9900,stroke:#333,stroke-width:2px
+    style CloudFront fill:#00bfff,stroke:#333,stroke-width:2px
+    style EC2 fill:#ff9900,stroke:#333,stroke-width:2px
+    style DB fill:#90ee90,stroke:#333,stroke-width:2px
+    style S3 fill:#90ee90,stroke:#333,stroke-width:2px
 ```
 
 ### Architecture Components
@@ -115,8 +127,9 @@ graph TD
 | **Frontend Interface** | React 19 + Tailwind v4 | High-density corporate dashboard (Graphite UI design system) |
 | **Backend API** | ElysiaJS (Bun) | High-throughput RESTful API operations |
 | **Database** | SQLite (WAL mode) | Microsecond I/O persistent storage on AWS EBS |
-| **AI Integration** | Model Context Protocol | Real-time database and Git repository auditing for AI agents |
-| **Cloud Environment** | AWS (EC2, ALB, NAT) | Secure, containerless, and scalable hosting infrastructure |
+| **Document Store** | AWS S3 + Dedicated KMS | Encrypted document and attachment storage with FinOps lifecycle rules |
+| **AI Integration** | Model Context Protocol | Real-time database, Git repository, and official AWS documentation querying |
+| **Cloud Environment** | AWS (EC2, ALB, NAT, S3) | Secure, containerless, and scalable hosting infrastructure |
 
 ---
 
@@ -124,10 +137,11 @@ graph TD
 
 ### 1. Model Context Protocol (MCP)
 
-To overcome the limitations of static AI training data, local MCP servers (`mcp-server-sqlite-npx`, `mcp-server-git`, `mcp-server-fetch`) were configured. This grants the AI agent real-time capabilities to:
+To overcome the limitations of static AI training data, local MCP servers (`awslabs.aws-documentation-mcp-server`, `aws-knowledge-mcp`, `mcp-server-sqlite-npx`, `mcp-server-git`, `mcp-server-fetch`) were configured. This grants the AI agent real-time capabilities to:
 
+* Query official AWS documentation in real time for compliant architecture patterns.
 * Audit database schemas and run queries natively.
-* Fetch up-to-date documentation for accurate code generation.
+* Fetch up-to-date API documentation for accurate code generation.
 * Read Git unstaged diffs and commit histories.
 
 ### 2. Agent Skills & UI Design
@@ -143,8 +157,8 @@ Injected specialized design knowledge via `.kiro/skills`, applying the **Graphit
 Defined strict organizational behaviors through AI Steering documents (`.kiro/steering/`):
 
 * **Zero Hardcoded Secrets:** Enforced environment variable usage.
-* **FinOps Compliance:** Mandatory AWS resource tagging (`Environment`, `CostCenter`, `ManagedBy`).
-* **DevSecOps:** Infrastructure deployment strictly via AWS Systems Manager (SSM), completely blocking public SSH access (Port 22).
+* **FinOps Compliance:** Mandatory AWS resource tagging (`Environment`, `CostCenter`, `ManagedBy`) and automatic lifecycle tiering.
+* **DevSecOps:** Dedicated Customer Managed KMS keys, strict IAM Least Privilege, and deployment via AWS Systems Manager (SSM).
 
 ---
 
@@ -189,24 +203,26 @@ bun run build
 
 ```text
 aws-enterprise-data-ai-platform/
-├── .github/workflows/      # Headless automation for CI/CD via AI CLI
-├── .kiro/                  # AI Governance, Context, and Capabilities
-│   ├── agents/             # Custom AI agents configurations
-│   ├── hooks/              # Automated execution hooks for AI
-│   ├── settings/           # MCP Servers configuration (mcp.json)
-│   ├── skills/              # On-demand specialized knowledge (e.g., Graphite UI)
-│   ├── specs/               # Technical specifications and task definitions
-│   └── steering/           # Global architectural guidelines and FinOps standards
-├── adr/                    # Architecture Decision Records (e.g., AI FinOps, MCP)
-├── assets/                 # Documentation assets
-│   └── screenshots/        # Project evolution images
-├── backend/                # High-performance RESTful API (ElysiaJS & SQLite)
-├── docs/                   # Additional documentation
-│   └── adr/                # Legacy Architecture Decision Records
-├── frontend/                # User Interface (React, Vite, Tailwind v4)
-├── infra/                   # Infrastructure as Code (IaC) and deployment scripts
-├── .gitignore               # Git ignore rules
-└── README.md                # Central project documentation
+├── .github/workflows/      # Headless automation for CI/CD via AI CLI
+├── .kiro/                  # AI Governance, Context, and Capabilities
+│   ├── agents/             # Custom AI agents configurations
+│   ├── hooks/              # Automated execution hooks for AI
+│   ├── settings/           # MCP Servers configuration (mcp.json)
+│   ├── skills/              # On-demand specialized knowledge (e.g., Graphite UI)
+│   ├── specs/               # Technical specifications and task definitions
+│   └── steering/           # Global architectural guidelines and FinOps standards
+├── assets/                 # Documentation assets
+│   └── screenshots/        # Project evolution images and showcase GIFs
+├── backend/                # High-performance RESTful API (ElysiaJS & SQLite)
+├── docs/                   # Additional documentation
+│   └── adr/                # Architecture Decision Records (e.g., AI FinOps, MCP, S3)
+├── frontend/                # User Interface (React, Vite, Tailwind v4)
+├── infra/                   # Infrastructure as Code (IaC) and deployment scripts
+│   └── terraform/          # AWS Infrastructure modules (VPC, EC2, S3, KMS)
+│       └── env/
+│           └── dev/        # Dev environment Terraform configuration
+├── .gitignore               # Git ignore rules
+└── README.md                # Central project documentation
 ```
 
 ---
@@ -214,7 +230,7 @@ aws-enterprise-data-ai-platform/
 ## ✅ CI/CD & Quality
 
 <p align="center">
-  <img src="https://github.com/PhilipeOliveiraS/aws-enterprise-data-ai-platform/actions/workflows/kiro-code-review.yml/badge.svg" alt="CI/CD Status">
+  <img src="https://github.com/PhilipeOliveiraS/aws-enterprise-data-ai-platform/actions/workflows/kiro-code-review.yml/badge.svg" alt="CI/CD Status">
 </p>
 
 The GitHub Actions pipeline (`kiro-code-review.yml`) automates:
@@ -230,22 +246,23 @@ The GitHub Actions pipeline (`kiro-code-review.yml`) automates:
 
 Key decisions behind TasKiro's architecture are documented as ADRs:
 
-* [ADR-0001 — AI Agent FinOps Governance](./adr/0001-ai-agent-finops-governance.md)
-* [ADR-0002 — MCP Integration & Graphite UI](./adr/0002-mcp-integration-graphite-ui.md)
+* [ADR-0001 — AI Agent FinOps Governance](./docs/adr/0001-ai-agent-finops-governance.md)
+* [ADR-0002 — MCP Integration & Graphite UI](./docs/adr/0002-mcp-integration-graphite-ui.md)
+* [ADR-0003 — Enterprise Document Store with S3 & KMS](./docs/adr/0003-enterprise-document-store-s3-kms.md)
 
-See the full list in [`/adr`](./adr).
+See the full list in [`/docs/adr`](./docs/adr).
 
 ---
 
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=PhilipeOliveiraS&show_icons=true&theme=graywhite&hide_border=true&count_private=true" alt="GitHub Stats"/>
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=PhilipeOliveiraS&layout=compact&theme=graywhite&hide_border=true" alt="Top Languages"/>
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=PhilipeOliveiraS&show_icons=true&theme=graywhite&hide_border=true&count_private=true" alt="GitHub Stats"/>
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=PhilipeOliveiraS&layout=compact&theme=graywhite&hide_border=true" alt="Top Languages"/>
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=PhilipeOliveiraS&repo=aws-enterprise-data-ai-platform&theme=graywhite&hide_border=true" alt="TasKiro Repo Card"/>
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=PhilipeOliveiraS&repo=aws-enterprise-data-ai-platform&theme=graywhite&hide_border=true" alt="TasKiro Repo Card"/>
 </p>
 
 ---
@@ -303,6 +320,6 @@ This project is licensed under the **MIT License** — see the [LICENSE](./LICEN
 * **Cloud Platform Engineering:** AWS Infrastructure, DevOps, FinOps
 * **Data Engineering:** ETL Pipelines, Data Architecture, Analytics
 * **Artificial Intelligence:** Agentic AI, Multi-Agent Systems (MCP), LLM Integrations
-* **Automation:** n8n workflows, CI/CD, Scripting
+* **Automation:** AWS Workflows, CI/CD, Scripting
 
 ---
