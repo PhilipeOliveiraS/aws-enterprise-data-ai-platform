@@ -1,3 +1,11 @@
+---
+author: Philipe Oliveira
+role: Cloud Platform Engineer & AI Specialist
+date: 2026-08-28
+status: accepted
+tags: [AWS S3, FinOps, DevSecOps, MCP, Cloud Platform Engineering, IaC, Compliance]
+---
+
 # ADR 0004: Security Waiver / Risk Acceptance — S3 Document Store (Temporary Lab Sandbox)
 
 ## Status
