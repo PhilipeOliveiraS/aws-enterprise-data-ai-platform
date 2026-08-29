@@ -1,39 +1,33 @@
 ---
-name: TasKiro Enterprise Cloud & DevSecOps Power
-description: Advanced cloud architecture, Terraform automation, FinOps cost-allocation, and DevSecOps governance for TasKiro.
-triggers:
-  - aws
-  - terraform
-  - cloud
-  - s3
-  - kms
-  - finops
-  - devsecops
-  - deploy
-  - infrastructure
-author: Philipe Oliveira
-version: 1.0.0
+name: "taskiro-cloud-power"
+displayName: "TasKiro Enterprise Cloud & DevSecOps Power"
+description: "Enterprise AWS cloud architecture, Terraform IaC automation, FinOps lifecycle, and DevSecOps governance for TasKiro."
+keywords:
+  - "aws"
+  - "terraform"
+  - "cloud"
+  - "s3"
+  - "kms"
+  - "finops"
+  - "devsecops"
+  - "deploy"
+  - "infrastructure"
 ---
 
 # TasKiro Enterprise Cloud & DevSecOps Power
 
-## Overview
-This Power activates automatically whenever infrastructure, cloud platforms, or deployment tasks are referenced. It enforces enterprise-grade C-Level engineering standards, security baselines, and rigorous FinOps governance.
+## Onboarding
+1. Verify that Terraform `>= 1.5.0` and AWS CLI are configured in the environment.
+2. Confirm the active AWS credentials/session target the configured region (`us-east-1`).
+3. Ensure connected MCP servers (`aws-documentation`, `aws-knowledge`) are responsive before generating IaC.
 
-## Core Directives & Behaviors
+## Available Tools & MCP Integrations
+- `awslabs.aws-documentation-mcp-server` — Query up-to-date AWS construct specifications and API policies in real time.
+- `mcp-server-git` — Inspect repository diffs and track infrastructure versioning.
+- `mcp-server-sqlite` — Query local task database metadata and schemas.
 
-1. **FinOps Compliance First:**
-   - Every AWS resource provisioned via Terraform must include mandatory tagging: `Environment`, `CostCenter = "TASKIRO-AI-LAB"`, and `ManagedBy = "Kiro-Agent"`.
-   - Lifecycle rules and storage tiering (e.g., Standard-IA, Glacier) must be evaluated for all data stores.
-
-2. **DevSecOps & Security Baseline:**
-   - Enforce least-privilege IAM policies.
-   - Mandate encryption at rest using Customer Managed KMS Keys (CMK) with rotation enabled whenever the target environment allows it, or document formal Security Waivers (ADRs) under constraints.
-   - Block public access completely (`block_public_acls`, `block_public_policy`, `ignore_public_acls`, `restrict_public_buckets = true`).
-
-3. **Agentic RAG & MCP Integration:**
-   - Utilize connected AWS Documentation MCP servers in real time to validate construct attributes against current standards before writing any code.
-   - Prioritize modular, clean, and production-ready IaC syntax.
-
-4. **Documentation & Traceability:**
-   - All major architectural deviations or constraints must result in a clean Architecture Decision Record (ADR) following the standard YAML frontmatter template.
+## Steering Instructions
+When planning or implementing infrastructure changes, follow these workflow guides:
+- For FinOps tagging and cost allocation: see [steering/finops-rules.md](steering/finops-rules.md)
+- For KMS and S3 security baselines: see [steering/security-baseline.md](steering/security-baseline.md)
+- For ADR creation and YAML frontmatter standard: see [steering/adr-governance.md](steering/adr-governance.md)
