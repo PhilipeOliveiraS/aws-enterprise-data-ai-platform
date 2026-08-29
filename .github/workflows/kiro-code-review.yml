@@ -1,58 +1,28 @@
-name: Kiro AI Enterprise Code Review
+name: Kiro Enterprise CI/CD Validation
 
 on:
-  pull_request:
-    branches: [ main ]
   push:
+    branches: [ main ]
+  pull_request:
     branches: [ main ]
 
 jobs:
-  validate-and-review:
-    name: Full-Stack Quality Gate & CI Pipeline
+  kiro-validation:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Bun Runtime
-        uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          fetch-depth: 0
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.9.8
+      - name: Install Kiro CLI
+        run: curl -fsSL https://cli.kiro.dev/install | bash
 
-      - name: Install Dependencies (Backend & Frontend)
-        run: |
-          cd backend && bun install
-          cd ../frontend && bun install
-
-      - name: Run Backend Typecheck & Schema Validation
-        run: |
-          cd backend
-          bun run --bun tsc --noEmit
-
-      - name: Run Frontend Build Verification (Vite + TS + CSS)
-        run: |
-          cd frontend
-          bun run build
-
-      - name: Validate Terraform Infrastructure (AWS Provider v5.x)
-        run: |
-          cd infra/terraform/envs/dev
-          terraform init -backend=false
-          terraform fmt -check
-          terraform validate
-
-      - name: Autonomous AI Review Notice
-        if: env.KIRO_API_KEY != ''
+      - name: Run Kiro Headless Validation
         env:
           KIRO_API_KEY: ${{ secrets.KIRO_API_KEY }}
         run: |
-          echo "Kiro API credentials detected. Ready for autonomous AI-DLC governance review."
+          kiro-cli chat \
+            --agent cicd-agent \
+            --no-interactive \
+            "Perform a strict CI/CD validation on the latest changes. Check for security flaws, ensure IaC files meet standards, and output a markdown summary of your findings."
