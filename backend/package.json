@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
+    "seed": "bun run scripts/seed.ts",
     "typecheck": "tsc --noEmit",
     "test": "JWT_SECRET=test-only-secret-not-a-real-credential DB_PATH=/tmp/taskiro-unit-test.sqlite AI_ENABLED=false bun test"
   },

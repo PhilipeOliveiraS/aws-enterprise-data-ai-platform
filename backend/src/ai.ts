@@ -220,7 +220,7 @@ const STATUS_LABEL: Record<TaskStatus, string> = {
  * Neutralize delimiter and fence sequences so untrusted task text cannot break
  * out of its context block and be reinterpreted as instructions.
  */
-function sanitizeForPrompt(value: string, maxChars: number): string {
+export function sanitizeForPrompt(value: string, maxChars: number): string {
   const flattened = value
     .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, " ")
     .replace(/```/g, "'''")
