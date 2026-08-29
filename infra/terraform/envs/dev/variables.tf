@@ -49,13 +49,13 @@ variable "availability_zones" {
 # ─── Compute ──────────────────────────────────────────────────────────────────
 
 variable "instance_type" {
-  description = "EC2 instance type for the TasKiro application server."
+  description = "EC2 instance type for the TasKiro application server (ARM/Graviton)."
   type        = string
-  default     = "t3.small"
+  default     = "t4g.small"
 }
 
 variable "key_pair_name" {
-  description = "Name of an existing EC2 Key Pair for SSH access (via bastion / SSM)."
+  description = "Name of an existing EC2 Key Pair. Left empty: admin access is via SSM Session Manager only (no SSH)."
   type        = string
   default     = ""
 }
@@ -78,4 +78,12 @@ variable "app_port" {
   description = "Port exposed by the ElysiaJS backend inside the EC2 instance."
   type        = number
   default     = 3000
+}
+
+# ─── CloudFront origin lockdown ────────────────────────────────────────────────
+
+variable "cloudfront_origin_prefix_list_id" {
+  description = "Managed prefix list ID for CloudFront origin-facing ranges in this region (com.amazonaws.global.cloudfront.origin-facing)."
+  type        = string
+  default     = "pl-3b927c52"
 }
