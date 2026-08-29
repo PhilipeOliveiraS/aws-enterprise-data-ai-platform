@@ -1,5 +1,7 @@
 interface HeaderProps {
   onAddTask: () => void;
+  onToggleCopilot: () => void;
+  copilotOpen: boolean;
   userInitials: string;
   userName: string;
   onLogout: () => void;
@@ -7,6 +9,8 @@ interface HeaderProps {
 
 export function Header({
   onAddTask,
+  onToggleCopilot,
+  copilotOpen,
   userInitials,
   userName,
   onLogout,
@@ -39,6 +43,21 @@ export function Header({
       </div>
 
       <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={onToggleCopilot}
+          aria-expanded={copilotOpen}
+          aria-controls="copilot-panel-chat"
+          aria-label="Toggle TasKiro Copilot"
+          title="TasKiro Copilot (Amazon Bedrock)"
+          className={`rounded-lg border px-3 py-2 text-sm font-semibold transition active:scale-[0.98] ${
+            copilotOpen
+              ? "border-neon-cyan/60 bg-blue-500/20 text-neon-cyan-soft"
+              : "border-neutral-700/60 text-neutral-300 hover:border-neon-cyan/50 hover:text-neon-cyan-soft"
+          }`}
+        >
+          <span aria-hidden="true">✦</span> Copilot
+        </button>
         <button
           type="button"
           onClick={onAddTask}

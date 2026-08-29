@@ -50,6 +50,7 @@ export function initSchema(): void {
       tags        TEXT NOT NULL DEFAULT '[]',
       assignee    TEXT NOT NULL DEFAULT '',
       position    INTEGER NOT NULL DEFAULT 0,
+      due_date    TEXT,
       created_at  TEXT NOT NULL DEFAULT (datetime('now')),
       updated_at  TEXT NOT NULL DEFAULT (datetime('now')),
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -59,6 +60,17 @@ export function initSchema(): void {
   db.exec(
     "CREATE INDEX IF NOT EXISTS idx_tasks_user ON tasks(user_id, status, position);",
   );
+
+  // Migration: add due_date to tasks tables created before this column
+  // existed. CREATE TABLE IF NOT EXISTS above is a no-op for pre-existing
+  // databases, so backfill the column idempotently for older DB files.
+  const hasDueDate = db
+    .query<{ name: string }, []>("PRAGMA table_info(tasks)")
+    .all()
+    .some((col) => col.name === "due_date");
+  if (!hasDueDate) {
+    db.exec("ALTER TABLE tasks ADD COLUMN due_date TEXT;");
+  }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS subtasks (

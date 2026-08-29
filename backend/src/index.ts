@@ -4,6 +4,7 @@ import { config } from "./config.ts";
 import { initSchema } from "./db.ts";
 import { authRoutes, authGuard } from "./auth.ts";
 import { taskRoutes } from "./tasks.ts";
+import { aiRoutes } from "./ai.ts";
 
 initSchema();
 
@@ -34,7 +35,11 @@ const app = new Elysia()
     set.status = 500;
     return { error: "Internal server error" };
   })
-  .get("/health", () => ({ status: "ok", service: "taskiro-api" }))
+  .get("/health", () => ({
+    status: "ok",
+    service: "taskiro-api",
+    ai: config.bedrock.enabled ? "enabled" : "disabled",
+  }))
   .use(authRoutes)
   // Current user profile (guarded).
   .group("/auth", (group) =>
@@ -45,10 +50,15 @@ const app = new Elysia()
     })),
   )
   .use(taskRoutes)
+  .use(aiRoutes)
   .listen(config.port);
 
 console.log(
   `TasKiro API running at http://${app.server?.hostname}:${app.server?.port}`,
+);
+console.log(
+  `[ai] Bedrock ${config.bedrock.enabled ? "enabled" : "disabled"} — ` +
+    `model=${config.bedrock.modelId} region=${config.bedrock.region}`,
 );
 
 export type App = typeof app;

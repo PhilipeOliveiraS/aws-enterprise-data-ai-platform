@@ -8,6 +8,7 @@ import { Sidebar } from "./Sidebar";
 import { KanbanColumn } from "./KanbanColumn";
 import { AddTaskModal } from "./AddTaskModal";
 import { EditTaskModal } from "./EditTaskModal";
+import { CopilotDrawer } from "./CopilotDrawer";
 
 function initialsOf(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -25,6 +26,8 @@ export function Dashboard() {
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [busyIds, setBusyIds] = useState<Set<string>>(new Set());
   const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [copilotOpen, setCopilotOpen] = useState(false);
+  const [breakdownIds, setBreakdownIds] = useState<Set<string>>(new Set());
 
   const setBusy = useCallback((id: string, busy: boolean) => {
     setBusyIds((prev) => {
@@ -169,12 +172,51 @@ export function Dashboard() {
     [],
   );
 
+  /**
+   * Ask Bedrock to decompose a task, then merge the persisted subtasks back
+   * into local state. The backend writes to SQLite before responding, so the
+   * returned list is authoritative — no optimistic guess is needed.
+   */
+  const handleBreakdown = useCallback(async (id: string) => {
+    setBreakdownIds((prev) => new Set(prev).add(id));
+    setError(null);
+    try {
+      const result = await api.aiBreakdown(id);
+      setTasks((prev) =>
+        prev.map((task) =>
+          task.id === id
+            ? {
+                ...task,
+                subtasks: result.subtasks,
+                subtaskTotal: result.subtaskTotal,
+                subtaskCompleted: result.subtaskCompleted,
+              }
+            : task,
+        ),
+      );
+    } catch (err) {
+      setError(
+        err instanceof ApiError
+          ? err.message
+          : "Could not generate subtasks. Please try again.",
+      );
+    } finally {
+      setBreakdownIds((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+    }
+  }, []);
+
   const displayName = user?.displayName ?? "Agent";
 
   return (
     <div className="relative z-10 flex h-full flex-col">
       <Header
         onAddTask={() => setModalOpen(true)}
+        onToggleCopilot={() => setCopilotOpen((open) => !open)}
+        copilotOpen={copilotOpen}
         userInitials={initialsOf(displayName)}
         userName={displayName}
         onLogout={logout}
@@ -229,10 +271,12 @@ export function Dashboard() {
                   column={column}
                   tasks={tasksByColumn[column.id]}
                   busyIds={busyIds}
+                  breakdownIds={breakdownIds}
                   draggingId={draggingId}
                   onMove={handleMove}
                   onDelete={handleDelete}
                   onEdit={handleEdit}
+                  onBreakdown={handleBreakdown}
                   onDragStart={setDraggingId}
                   onDragEnd={() => setDraggingId(null)}
                   onDropTask={(id) => handleMove(id, column.id)}
@@ -255,6 +299,12 @@ export function Dashboard() {
         onClose={() => setEditingTask(null)}
         onSave={handleSave}
         onSubtasksChanged={handleSubtasksChanged}
+      />
+
+      <CopilotDrawer
+        open={copilotOpen}
+        onClose={() => setCopilotOpen(false)}
+        taskCount={tasks.length}
       />
     </div>
   );

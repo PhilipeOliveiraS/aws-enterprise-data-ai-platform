@@ -79,8 +79,8 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
         .get(user.id, status);
 
       db.query(
-        `INSERT INTO tasks (id, user_id, title, description, status, priority, tags, assignee, position)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO tasks (id, user_id, title, description, status, priority, tags, assignee, position, due_date)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       ).run(
         id,
         user.id,
@@ -91,6 +91,7 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
         JSON.stringify(body.tags ?? []),
         body.assignee?.trim() ?? "",
         nextPos?.pos ?? 0,
+        body.dueDate ?? null,
       );
 
       const row = getOwnedTask(id, user.id)!;
@@ -105,6 +106,7 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
         priority: t.Optional(prioritySchema),
         tags: t.Optional(t.Array(t.String())),
         assignee: t.Optional(t.String()),
+        dueDate: t.Optional(t.Union([t.String(), t.Null()])),
       }),
     },
   )
@@ -126,12 +128,15 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
         priority: body.priority ?? existing.priority,
         tags: body.tags ? JSON.stringify(body.tags) : existing.tags,
         assignee: body.assignee?.trim() ?? existing.assignee,
+        // Omitted -> keep existing; explicit null -> clear the due date.
+        due_date:
+          body.dueDate === undefined ? existing.due_date : body.dueDate,
       };
 
       db.query(
         `UPDATE tasks
          SET title = ?, description = ?, status = ?, priority = ?, tags = ?, assignee = ?,
-             updated_at = datetime('now')
+             due_date = ?, updated_at = datetime('now')
          WHERE id = ? AND user_id = ?`,
       ).run(
         merged.title,
@@ -140,6 +145,7 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
         merged.priority,
         merged.tags,
         merged.assignee,
+        merged.due_date,
         params.id,
         user.id,
       );
@@ -157,6 +163,7 @@ export const taskRoutes = new Elysia({ prefix: "/tasks" })
         priority: t.Optional(prioritySchema),
         tags: t.Optional(t.Array(t.String())),
         assignee: t.Optional(t.String()),
+        dueDate: t.Optional(t.Union([t.String(), t.Null()])),
       }),
     },
   )

@@ -75,6 +75,42 @@ export interface TaskDraft {
   assignee?: string;
 }
 
+/* ----------------------------- AI (Bedrock) ----------------------------- */
+
+/** Token accounting echoed back by the backend for cost observability. */
+export interface AiTokenUsage {
+  inputTokens: number;
+  outputTokens: number;
+  totalTokens: number;
+  latencyMs: number;
+}
+
+export interface AiChatResponse {
+  answer: string;
+  contextTaskCount: number;
+  model: string;
+  usage: AiTokenUsage;
+}
+
+export interface AiBreakdownResponse {
+  taskId: string;
+  created: Subtask[];
+  subtasks: Subtask[];
+  subtaskTotal: number;
+  subtaskCompleted: number;
+  model: string;
+  usage: AiTokenUsage;
+}
+
+export interface AiStandupResponse {
+  report: string;
+  generatedAt: string;
+  totals: { todo: number; inProgress: number; done: number };
+  contextTaskCount: number;
+  model: string;
+  usage: AiTokenUsage;
+}
+
 export const api = {
   register: (input: {
     email: string;
@@ -134,4 +170,21 @@ export const api = {
     request<void>(`/tasks/${taskId}/subtasks/${subtaskId}`, {
       method: "DELETE",
     }),
+
+  /** Ask the Bedrock-backed Copilot a question grounded in the user's board. */
+  aiChat: (message: string) =>
+    request<AiChatResponse>("/ai/chat", {
+      method: "POST",
+      body: JSON.stringify({ message }),
+    }),
+
+  /** Generate 3-5 technical subtasks for a task and persist them. */
+  aiBreakdown: (taskId: string) =>
+    request<AiBreakdownResponse>("/ai/breakdown", {
+      method: "POST",
+      body: JSON.stringify({ taskId }),
+    }),
+
+  /** Generate an executive Markdown standup report. */
+  aiStandup: () => request<AiStandupResponse>("/ai/standup"),
 };

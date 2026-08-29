@@ -26,10 +26,13 @@ interface KanbanColumnProps {
   column: Column;
   tasks: Task[];
   busyIds: Set<string>;
+  /** IDs of tasks currently being broken down by Bedrock. */
+  breakdownIds: Set<string>;
   draggingId: string | null;
   onMove: (id: string, status: TaskStatus) => void;
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
+  onBreakdown: (id: string) => void;
   onDragStart: (id: string) => void;
   onDragEnd: () => void;
   onDropTask: (id: string) => void;
@@ -39,10 +42,12 @@ export function KanbanColumn({
   column,
   tasks,
   busyIds,
+  breakdownIds,
   draggingId,
   onMove,
   onDelete,
   onEdit,
+  onBreakdown,
   onDragStart,
   onDragEnd,
   onDropTask,
@@ -120,10 +125,12 @@ export function KanbanColumn({
               key={task.id}
               task={task}
               busy={busyIds.has(task.id)}
+              breakingDown={breakdownIds.has(task.id)}
               dragging={draggingId === task.id}
               onMove={onMove}
               onDelete={onDelete}
               onEdit={onEdit}
+              onBreakdown={onBreakdown}
               onDragStart={onDragStart}
               onDragEnd={onDragEnd}
             />

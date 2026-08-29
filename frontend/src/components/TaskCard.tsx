@@ -6,10 +6,13 @@ interface TaskCardProps {
   onMove: (id: string, status: TaskStatus) => void;
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
+  onBreakdown: (id: string) => void;
   onDragStart: (id: string) => void;
   onDragEnd: () => void;
   busy?: boolean;
   dragging?: boolean;
+  /** True while Bedrock is generating subtasks for this task. */
+  breakingDown?: boolean;
 }
 
 const MOVE_TARGETS: Record<TaskStatus, { label: string; to: TaskStatus }[]> = {
@@ -26,10 +29,12 @@ export function TaskCard({
   onMove,
   onDelete,
   onEdit,
+  onBreakdown,
   onDragStart,
   onDragEnd,
   busy,
   dragging,
+  breakingDown,
 }: TaskCardProps) {
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.setData("text/plain", task.id);
@@ -75,6 +80,15 @@ export function TaskCard({
         </div>
       )}
 
+      {breakingDown && (
+        <p
+          role="status"
+          className="mt-3 rounded-md border border-neon-cyan/30 bg-blue-500/5 px-2 py-1.5 text-[10px] text-neon-cyan-soft"
+        >
+          Generating subtasks with Bedrock…
+        </p>
+      )}
+
       {task.subtaskTotal > 0 && (
         <div className="mt-3" aria-hidden="false">
           <div className="mb-1 flex items-center justify-between">
@@ -109,6 +123,17 @@ export function TaskCard({
           ))}
         </div>
         <div className="flex gap-1.5">
+          <button
+            type="button"
+            disabled={busy || breakingDown}
+            draggable={false}
+            onClick={() => onBreakdown(task.id)}
+            aria-label={`Generate technical subtasks for "${task.title}" with AI`}
+            title="AI breakdown — generate technical subtasks"
+            className="rounded-md border border-neon-cyan/30 bg-blue-500/5 px-2 py-1 text-[11px] font-medium text-neon-cyan-soft transition hover:bg-blue-500/15 disabled:opacity-50"
+          >
+            {breakingDown ? "…" : "✦ AI"}
+          </button>
           <button
             type="button"
             disabled={busy}

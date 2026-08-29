@@ -19,6 +19,7 @@ export interface TaskRow {
   tags: string; // JSON-encoded string[]
   assignee: string;
   position: number;
+  due_date: string | null; // ISO date (YYYY-MM-DD) or null when unset
   created_at: string;
   updated_at: string;
 }
@@ -59,6 +60,7 @@ export interface TaskDTO {
   tags: string[];
   assignee: string;
   position: number;
+  dueDate: string | null;
   createdAt: string;
   updatedAt: string;
   subtasks: SubtaskDTO[];
@@ -83,6 +85,7 @@ export function toTaskDTO(row: TaskRow, subtasks: SubtaskDTO[] = []): TaskDTO {
     tags,
     assignee: row.assignee,
     position: row.position,
+    dueDate: row.due_date ?? null,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     subtasks,
