@@ -1,16 +1,3 @@
----
-author: "Philipe Oliveira"
-role: "Cloud Platform Engineer & AI Specialist"
-date: "2026-08-25"
-time: "16:47"
-status: "accepted"
-tags:
-  - "AI Agent Governance"
-  - "FinOps"
-  - "DevSecOps"
-  - "Cloud Platform Engineering"
----
-
 # ADR 0001: Implementation of FinOps & DevSecOps Governance for AI Agents
 
 ## Status

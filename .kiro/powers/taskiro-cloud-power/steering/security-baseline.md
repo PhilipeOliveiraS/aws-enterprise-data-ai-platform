@@ -1,3 +1,4 @@
+<!-- Power-scoped steering (taskiro-cloud-power only). See .kiro/steering/ for global, cross-power conventions. -->
 # DevSecOps & Security Baseline
 
 ## S3 Isolation
