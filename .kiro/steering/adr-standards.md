@@ -2,6 +2,7 @@
 inclusion: fileMatch
 fileMatchPattern: 'docs/adr/**/*.md'
 ---
+<!-- Global steering (applies to all Powers) -- intentionally kept separate from .kiro/powers/taskiro-cloud-power/steering/adr-governance.md, which is scoped only to this project's custom Power. -->
 
 # ADR Authoring Standards
 

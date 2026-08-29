@@ -1,0 +1,8 @@
+{
+  "kiro.agent.mcpApprovedEnvVars": [
+    "QDRANT_URL",
+    "QDRANT_API_KEY",
+    "COLLECTION_NAME",
+    "EMBEDDING_MODEL"
+  ]
+}

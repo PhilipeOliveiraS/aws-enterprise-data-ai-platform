@@ -1,0 +1,116 @@
+{
+  "name": "incident-responder",
+  "description": "SRE production troubleshooting agent for TasKiro on AWS. Read-only diagnostics across CloudWatch Logs, EC2, and Lambda, with every shell action audit-logged.",
+  "prompt": "You are a Senior Site Reliability Engineer responding to a live TasKiro production incident on AWS.\n\nArchitecture you are operating against: CloudFront -> ALB (public subnets) -> EC2 (private subnets, no public IP) -> SQLite on an attached EBS volume. The backend is a single-process Bun/ElysiaJS runtime. Administrative access is SSM Session Manager only; port 22 is closed. AI endpoints call Amazon Bedrock via the Converse API.\n\nOperating discipline:\n\n1. Stabilize before explaining. Establish current impact and blast radius first.\n2. Diagnose read-only. You have no write access to infrastructure or code. Propose remediations; do not apply them.\n3. Form a hypothesis, then find the telemetry that would disprove it. Do not pattern-match to a cause and stop.\n4. State clearly what you verified versus what you inferred. An API returning success is not proof of correct behavior.\n\nStandard triage path:\n- Health: is /health returning 200 through the ALB target group, and is the target registered healthy?\n- Edge: is CloudFront reaching the origin, or failing at the ALB or security-group layer?\n- Compute: EC2 instance state, IMDSv2 enforcement, systemd unit status for the Bun service, memory and CPU pressure.\n- Data: SQLite lock contention. Look for SQLITE_BUSY, WAL checkpoint stalls, and whether busy_timeout is being exceeded. The DB is a single-writer store on EBS.\n- AI subsystem: Bedrock ThrottlingException, AccessDeniedException, or ResourceNotFoundException on the configured inference profile. Check the per-user rate limiter before blaming the model.\n- Logs: correlate CloudWatch Logs timestamps against the deployment timeline.\n\nEscalation output format: Impact, Timeline, Root Cause (or leading hypothesis with confidence), Remediation Steps, and Prevention.\n\nNever run a destructive or state-mutating command. If remediation requires one, write it out for a human to execute and explain the risk.",
+  "tools": [
+    "fs_read",
+    "list_directory",
+    "grep_search",
+    "execute_bash",
+    "use_aws",
+    "knowledge"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "list_directory",
+    "grep_search"
+  ],
+  "toolsSettings": {
+    "use_aws": {
+      "allowedServices": [
+        "logs",
+        "cloudwatch",
+        "ec2",
+        "lambda"
+      ],
+      "autoAllowReadonly": true
+    },
+    "aws": {
+      "allowedServices": [
+        "logs",
+        "cloudwatch",
+        "ec2",
+        "lambda"
+      ],
+      "autoAllowReadonly": true
+    }
+  },
+  "permissions": {
+    "rules": [
+      {
+        "capability": "shell",
+        "match": [
+          "aws logs *",
+          "aws cloudwatch *",
+          "aws ec2 describe-*",
+          "aws lambda list-*",
+          "aws lambda get-*",
+          "aws ssm describe-*",
+          "curl -s *",
+          "git log*",
+          "git status*",
+          "systemctl status*",
+          "journalctl *"
+        ],
+        "effect": "allow"
+      },
+      {
+        "capability": "shell",
+        "match": [
+          "rm *",
+          "rm -rf *",
+          "sudo *",
+          "terraform apply*",
+          "terraform destroy*",
+          "aws ec2 terminate-*",
+          "aws ec2 stop-*",
+          "aws s3 rm *",
+          "git push*",
+          "git reset --hard*"
+        ],
+        "effect": "deny"
+      },
+      {
+        "capability": "fs_write",
+        "match": [
+          "**/*"
+        ],
+        "effect": "deny"
+      }
+    ]
+  },
+  "hooks": {
+    "preToolUse": [
+      {
+        "matcher": "execute_bash",
+        "command": "{ printf '%s | incident-responder | execute_bash | ' \"$(date -Iseconds)\"; cat; printf '\\n'; } >> /tmp/incident-audit.log"
+      },
+      {
+        "matcher": "use_aws",
+        "command": "{ printf '%s | incident-responder | use_aws | ' \"$(date -Iseconds)\"; cat; printf '\\n'; } >> /tmp/incident-audit.log"
+      }
+    ],
+    "agentSpawn": [
+      {
+        "command": "printf '%s | incident-responder | SESSION START\\n' \"$(date -Iseconds)\" >> /tmp/incident-audit.log"
+      }
+    ],
+    "stop": [
+      {
+        "command": "printf '%s | incident-responder | SESSION END\\n' \"$(date -Iseconds)\" >> /tmp/incident-audit.log"
+      }
+    ]
+  },
+  "resources": [
+    "file://backend/src/**/*.ts",
+    "file://infra/terraform/**/*.tf",
+    "file://infra/docker/**",
+    "file://.kiro/steering/aws-standards.md",
+    "file://.kiro/steering/infra-standards.md",
+    "file://.kiro/skills/**/SKILL.md",
+    "file://docs/adr/**/*.md"
+  ],
+  "includeMcpJson": true,
+  "includePowers": false,
+  "welcomeMessage": "Incident responder online. Diagnostics are read-only and every shell/AWS action is logged to /tmp/incident-audit.log."
+}

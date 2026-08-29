@@ -1,3 +1,4 @@
+<!-- Power-scoped steering (taskiro-cloud-power only) -- intentionally kept separate from .kiro/steering/adr-standards.md, which applies globally across all Powers. -->
 # ADR Governance Standard
 
 All architectural deviations or new modules must produce a documented ADR in `docs/adr/` with standard YAML frontmatter:

@@ -59,6 +59,19 @@
         "aws___search_documentation",
         "aws___read_documentation"
       ]
+    },
+    "power-qdrant-qdrant": {
+      "command": "/home/philipe/.local/bin/uvx",
+      "args": [
+        "mcp-server-qdrant"
+      ],
+      "env": {
+        "QDRANT_URL": "http://localhost:6333",
+        "QDRANT_API_KEY": "",
+        "COLLECTION_NAME": "taskiro-memories",
+        "EMBEDDING_MODEL": "sentence-transformers/all-MiniLM-L6-v2"
+      },
+      "disabled": false
     }
   }
 }
